@@ -1,6 +1,6 @@
 //Obstacles
 let cakeImg = new Image();
-cakeImg.src = "./images/ClipartKey_831865.png'";
+cakeImg.src = "./images/ClipartKey_831865.png";
 
 //Game Variables
 let playerX = 120;
