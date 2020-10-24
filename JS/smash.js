@@ -1,6 +1,6 @@
 //Obstacles
 let cakeImg = new Image();
-cakeImg.src = "./images/ClipartKey_831865.png";
+cakeImg.src = "../images/ClipartKey_831865.png";
 
 //Game Variables
 let playerX = 120;
@@ -38,9 +38,9 @@ document.addEventListener('keyup', function(event){
 //StartGame Funtion
 function startGame() {
     let background = new Image();
-    background.src = "./images/background-carnival.jpg";
+    background.src = "../images/background-carnival.jpg";
     let playerImg = new Image();
-    playerImg.src = './images/Daco_261073.png';
+    playerImg.src = '../images/Daco_261073.png';
 
     ctx.drawImage(background, 0, 0 );
     ctx.drawImage(playerImg, playerX, playerY);
@@ -111,10 +111,10 @@ function gameOver() {
     let gameOverScreen = document.createElement('div');
     gameOverScreen.className = "gameoverscreen";
     gameOverScreen.innerHTML= 
-    `<img class="game-over-img" src="./images/hame-over.png">
+    `<img class="game-over-img" src="../images/hame-over.png">
     <h1 class="gameover">Oh No!</h1>
     <h2>You're covered in cake!</h2>
-    <img class= "smashed-gif" src="./images/smashed.gif">
+    <img class= "smashed-gif" src="../images/smashed.gif">
     <!-- <button class="btn-start">PLAY AGAIN</button> -->
     <button class="btn-start" onclick="location.href='index.html'">PLAY AGAIN</button>`;
     let body = document.querySelector('body');
@@ -133,7 +133,7 @@ function winner() {
         <h1 class="youwin">Congratulations!</h1>
         <h1>You win!</h1>
         <h2>You avoided all the cakes!</h2>
-        <img class="inyourface-gif" src="./images/inyourface.gif">
+        <img class="inyourface-gif" src="../images/inyourface.gif">
         <button class="btn-start" onclick="location.href='index.html'">PLAY AGAIN</button>
         `;
     let body = document.querySelector('body');
