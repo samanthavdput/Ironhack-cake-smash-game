@@ -1,6 +1,6 @@
 //Obstacles
 let cakeImg = new Image();
-cakeImg.src = "../images/ClipartKey_831865.png";
+cakeImg.src = "images/ClipartKey_831865.png";
 
 //Game Variables
 let playerX = 120;
@@ -38,9 +38,9 @@ document.addEventListener('keyup', function(event){
 //StartGame Funtion
 function startGame() {
     let background = new Image();
-    background.src = "../images/background-carnival.jpg";
+    background.src = "images/background-carnival.jpg";
     let playerImg = new Image();
-    playerImg.src = '../images/Daco_261073.png';
+    playerImg.src = "images/Daco_261073.png";
 
     ctx.drawImage(background, 0, 0 );
     ctx.drawImage(playerImg, playerX, playerY);
