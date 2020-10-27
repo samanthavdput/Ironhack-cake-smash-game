@@ -22,6 +22,8 @@ button.addEventListener('click', () => {
     ctx = canvas.getContext('2d');
     intervalId = 0; 
 
+    playBackgroundMusic();
+
     intervalId = setInterval(() => {
         requestAnimationFrame(startGame);
     }, 10);

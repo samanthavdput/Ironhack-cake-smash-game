@@ -14,6 +14,42 @@ let cakeY = cake.y;
 let cakeYincrement = 2;
 let cakeYincrementMore = 4;
 
+//Sounds
+let backgroundMusic = new Audio();
+backgroundMusic.src = "sounds/backgroundMusic.wav";
+
+let smashSound = new Audio();
+smashSound.src = "sounds/splatSound.wav";
+
+let loserSound = new Audio();
+loserSound.src = "sounds/failSound.wav";
+
+let winnerSound = new Audio();
+winnerSound.src = "sounds/yaySound.wav";
+
+//play sounds
+const playBackgroundMusic = () => {
+    backgroundMusic.volume = "0.2";
+    backgroundMusic.play();
+  };
+
+const playSmashSound = () => {
+    smashSound.play();
+};
+
+const playloserSound = () => {
+    loserSound.play();
+};
+
+const playWinnerSound = () => {
+    winnerSound.play();
+};
+
+const stopBackgroundMusic = () => {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+};
+
 //playerMove function
 document.addEventListener('keydown', function(event){
     if (event.key === 'ArrowRight'){
@@ -55,6 +91,7 @@ function startGame() {
     moveCake();
 }
 
+
 //Add & Move Cake
 function addCake() {
     if (counter >= 30) {
@@ -84,10 +121,13 @@ function moveCake() {
     cake.forEach((cupcake) => {
         if (counter >= 40) {
             cupcake.y++;
+            backgroundMusic.playbackRate = 1;
         } else if (counter > 20 && counter <= 40 ) {
             cupcake.y += cakeYincrement;
+            backgroundMusic.playbackRate = 1.5;
         } else {
             cupcake.y += cakeYincrementMore;
+            backgroundMusic.playbackRate = 2;
         }
     });
 }
@@ -98,6 +138,7 @@ function collisionCake(i) {
         playerX + cakeImg.width > (cake[i].x -10) &&
         playerY < (cake[i].y -5) + cakeImg.height &&
         playerY + cakeImg.height > (cake[i].y -5)) {
+            playSmashSound();
             clearInterval(intervalId);
             gameOver();
         } 
@@ -106,15 +147,17 @@ function collisionCake(i) {
 //GameOver Function
 function gameOver() {
     clearInterval(intervalId);
+    stopBackgroundMusic();
+    playloserSound();
     let canvas = document.querySelector('canvas');
     canvas.className = 'hidden';
     let gameOverScreen = document.createElement('div');
     gameOverScreen.className = "gameoverscreen";
     gameOverScreen.innerHTML= 
-    `<img class="game-over-img" src="../images/hame-over.png">
+    `<img class="game-over-img" src="images/hame-over.png">
     <h1 class="gameover">Oh No!</h1>
     <h2>You're covered in cake!</h2>
-    <img class= "smashed-gif" src="../images/smashed.gif">
+    <img class= "smashed-gif" src="images/smashed.gif">
     <!-- <button class="btn-start">PLAY AGAIN</button> -->
     <button class="btn-start" onclick="location.href='index.html'">PLAY AGAIN</button>`;
     let body = document.querySelector('body');
@@ -125,6 +168,8 @@ function gameOver() {
 //Winner Function
 function winner() {
     clearInterval(intervalId);
+    stopBackgroundMusic();
+    playWinnerSound();
     let canvas = document.querySelector('canvas');
     canvas.className = 'hidden';
     let winningScreen = document.createElement('div');
@@ -133,7 +178,7 @@ function winner() {
         <h1 class="youwin">Congratulations!</h1>
         <h1>You win!</h1>
         <h2>You avoided all the cakes!</h2>
-        <img class="inyourface-gif" src="../images/inyourface.gif">
+        <img class="inyourface-gif" src="images/inyourface.gif">
         <button class="btn-start" onclick="location.href='index.html'">PLAY AGAIN</button>
         `;
     let body = document.querySelector('body');
