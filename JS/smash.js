@@ -3,16 +3,18 @@ let cakeImg = new Image();
 cakeImg.src = "images/ClipartKey_831865.png";
 
 //Game Variables
+let playerImg;
 let playerX = 120;
 let playerY = 500;
 let RightArrowDown = false;
 let LefttArrowDown = false;
-let playerMovement = 20; 
+let playerMovement = 15; 
 let cake = [ { x: 700, y: 150 } ];
 let cakeX = cake.x;
 let cakeY = cake.y;
-let cakeYincrement = 2;
-let cakeYincrementMore = 4;
+let cakeYSpeed = 2;
+let cakeYTopSpeed = 4;
+let isGameover = false;
 
 //Sounds
 let backgroundMusic = new Audio();
@@ -29,7 +31,7 @@ winnerSound.src = "sounds/yaySound.wav";
 
 //play sounds
 const playBackgroundMusic = () => {
-    backgroundMusic.volume = "0.2";
+    backgroundMusic.volume = "0.1";
     backgroundMusic.play();
   };
 
@@ -53,7 +55,7 @@ const stopBackgroundMusic = () => {
 //playerMove function
 document.addEventListener('keydown', function(event){
     if (event.key === 'ArrowRight'){
-        if (playerX + playerMovement < canvas.width - playerMovement - 50) {
+        if (playerX + playerMovement < canvas.width - playerMovement - 30) {
             RightArrowDown = true;
             playerX = playerX + playerMovement;
         }
@@ -75,7 +77,7 @@ document.addEventListener('keyup', function(event){
 function startGame() {
     let background = new Image();
     background.src = "images/background-carnival.jpg";
-    let playerImg = new Image();
+    playerImg = new Image();
     playerImg.src = "images/Daco_261073.png";
 
     ctx.drawImage(background, 0, 0 );
@@ -96,48 +98,48 @@ function startGame() {
 function addCake() {
     if (counter >= 30) {
         let randomPossibility = Math.floor(Math.random() * 120);
-        let randomPlace = Math.floor(Math.random() * (canvas.width  - 30));
+        let randomPlace = Math.floor(Math.random() * (canvas.width  - 60));
         if(randomPossibility === 1){
-            let cupcake = {
+            let pie = {
                 x: randomPlace,
                 y: 10
             }
-                cake.push(cupcake);
+                cake.push(pie);
         } 
     } else {
         let randomPossibility = Math.floor(Math.random() * 60); 
-        let randomPlace = Math.floor(Math.random() * (canvas.width  - 30));
+        let randomPlace = Math.floor(Math.random() * (canvas.width  - 60));
         if(randomPossibility === 1){
-            let cupcake = {
+            let pie = {
                 x: randomPlace,
                 y: 10
             };
-                cake.push(cupcake);
+                cake.push(pie);
         } 
     }
 }
 
 function moveCake() {
-    cake.forEach((cupcake) => {
+    cake.forEach((pie) => {
         if (counter >= 40) {
-            cupcake.y++;
+            pie.y++;
             backgroundMusic.playbackRate = 1;
         } else if (counter > 20 && counter <= 40 ) {
-            cupcake.y += cakeYincrement;
-            backgroundMusic.playbackRate = 1.5;
+            pie.y += cakeYSpeed;
+            backgroundMusic.playbackRate = 1.4;
         } else {
-            cupcake.y += cakeYincrementMore;
-            backgroundMusic.playbackRate = 2;
+            pie.y += cakeYTopSpeed;
+            backgroundMusic.playbackRate = 1.8;
         }
     });
 }
 
 //cake Collision
 function collisionCake(i) {
-    if (playerX < (cake[i].x -10)+ cakeImg.width  &&
-        playerX + cakeImg.width > (cake[i].x -10) &&
-        playerY < (cake[i].y -5) + cakeImg.height &&
-        playerY + cakeImg.height > (cake[i].y -5)) {
+    if (playerX < (cake[i].x) + cakeImg.width &&
+        playerX + playerImg.width > cake[i].x &&
+        playerY < cake[i].y + cakeImg.height &&
+        playerY + playerImg.height > cake[i].y) {
             playSmashSound();
             clearInterval(intervalId);
             gameOver();
@@ -149,6 +151,7 @@ function gameOver() {
     clearInterval(intervalId);
     stopBackgroundMusic();
     playloserSound();
+    isGameover = true;
     let canvas = document.querySelector('canvas');
     canvas.className = 'hidden';
     let gameOverScreen = document.createElement('div');

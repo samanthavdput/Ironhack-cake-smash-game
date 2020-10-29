@@ -24,6 +24,11 @@ button.addEventListener('click', () => {
 
     playBackgroundMusic();
 
+    // to do: avoid loop of loops 
+    // intervalId = setInterval(() => {
+    //     startGame();
+    // }, 10);
+
     intervalId = setInterval(() => {
         requestAnimationFrame(startGame);
     }, 10);
@@ -36,9 +41,12 @@ button.addEventListener('click', () => {
     if(counter > 0){
         setTimeout(countDown,1000);
     }
-    else {
-        clearInterval(downloadTimer);
-        winner();
+    else if (isGameover === true) {
+        clearTimeout(downloadTimer);
+        }
+        else {
+            clearTimeout(downloadTimer);
+            winner();
         }
     }
 });
