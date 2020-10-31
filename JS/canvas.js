@@ -24,13 +24,8 @@ button.addEventListener('click', () => {
 
     playBackgroundMusic();
 
-    // to do: avoid loop of loops 
-    // intervalId = setInterval(() => {
-    //     startGame();
-    // }, 10);
-
     intervalId = setInterval(() => {
-        requestAnimationFrame(startGame);
+        startGame();
     }, 10);
 
     counter = 60;

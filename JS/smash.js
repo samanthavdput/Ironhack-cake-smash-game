@@ -1,7 +1,3 @@
-//Obstacles
-let cakeImg = new Image();
-cakeImg.src = "images/ClipartKey_831865.png";
-
 //Game Variables
 let playerImg;
 let playerX = 120;
@@ -16,6 +12,10 @@ let cakeYSpeed = 2;
 let cakeYTopSpeed = 4;
 let isGameover = false;
 
+//Obstacle object
+let cakeImg = new Image();
+cakeImg.src = "images/ClipartKey_831865.png";
+
 //Sounds
 let backgroundMusic = new Audio();
 backgroundMusic.src = "sounds/backgroundMusic.wav";
@@ -29,28 +29,48 @@ loserSound.src = "sounds/failSound.wav";
 let winnerSound = new Audio();
 winnerSound.src = "sounds/yaySound.wav";
 
-//play sounds
-const playBackgroundMusic = () => {
+//soundPlay functions
+function playBackgroundMusic() {
     backgroundMusic.volume = "0.1";
     backgroundMusic.play();
-  };
+  }
 
-const playSmashSound = () => {
+function playSmashSound() {
     smashSound.play();
-};
+}
 
-const playloserSound = () => {
+function playloserSound() {
     loserSound.play();
-};
+}
 
-const playWinnerSound = () => {
+function playWinnerSound() {
     winnerSound.play();
-};
+}
 
-const stopBackgroundMusic = () => {
+function stopBackgroundMusic() {
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
-};
+}
+
+//StartGame Funtion
+function startGame() {
+    let background = new Image();
+    background.src = "images/background-carnival.jpg";
+    playerImg = new Image();
+    playerImg.src = "images/Daco_261073.png";
+
+    ctx.drawImage(background, 0, 0 );
+    ctx.drawImage(playerImg, playerX, playerY);
+    ctx.font = '15px Comic Sans MS';
+    ctx.fillStyle = "black";
+    ctx.fillText('Time left: ' + counter, 450,canvas.height-645 );
+    for (let i = 0; i < cake.length; i++) {
+        ctx.drawImage(cakeImg, cake[i].x, cake[i].y);
+        collisionCake(i);
+    }
+    addCake();
+    moveCake();
+}
 
 //playerMove function
 document.addEventListener('keydown', function(event){
@@ -73,43 +93,32 @@ document.addEventListener('keyup', function(event){
     isLefttArrow = false;
 });
 
-//StartGame Funtion
-function startGame() {
-    let background = new Image();
-    background.src = "images/background-carnival.jpg";
-    playerImg = new Image();
-    playerImg.src = "images/Daco_261073.png";
-
-    ctx.drawImage(background, 0, 0 );
-    ctx.drawImage(playerImg, playerX, playerY);
-    ctx.font = '15px Comic Sans MS';
-    ctx.fillStyle = "black";
-    ctx.fillText('Time left: ' + counter, 450,canvas.height-645 );
-    for (let i = 0; i < cake.length; i++) {
-        ctx.drawImage(cakeImg, cake[i].x, cake[i].y);
-        collisionCake(i);
-    }
-    addCake();
-    moveCake();
-}
-
-
 //Add & Move Cake
 function addCake() {
-    if (counter >= 30) {
+    if (counter >= 40) {
         let randomPossibility = Math.floor(Math.random() * 120);
         let randomPlace = Math.floor(Math.random() * (canvas.width  - 60));
         if(randomPossibility === 1){
             let pie = {
                 x: randomPlace,
                 y: 10
-            }
+            };
+                cake.push(pie);
+        } 
+    } else if (counter <= 40 && counter >= 20){
+        let randomPossibility = Math.floor(Math.random() * 90); 
+        let randomPlace = Math.floor(Math.random() * (canvas.width  - 60));
+        if (randomPossibility === 1) {
+            let pie = {
+                x: randomPlace,
+                y: 10
+            };
                 cake.push(pie);
         } 
     } else {
         let randomPossibility = Math.floor(Math.random() * 60); 
         let randomPlace = Math.floor(Math.random() * (canvas.width  - 60));
-        if(randomPossibility === 1){
+        if (randomPossibility === 1) {
             let pie = {
                 x: randomPlace,
                 y: 10
